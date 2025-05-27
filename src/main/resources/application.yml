@@ -1,0 +1,35 @@
+application:
+  name: '@project.artifactId@'
+  version: '@project.version@'
+  description: '@project.description@'
+
+spring:
+  application:
+    name: ${application.name}
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+
+server:
+  servlet:
+    context-path: ${CONTEXT_PATH:/job-agent}
+
+management:
+  server:
+    port: ${MANAGEMENT_SERVER_PORT:${server.port}}
+  endpoints:
+    web:
+      base-path: ${MANAGEMENT_PATH:/management}
+      exposure:
+        include: health,info,prometheus,metrics
+  health:
+    probes:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
